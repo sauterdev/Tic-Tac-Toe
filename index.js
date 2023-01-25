@@ -3,6 +3,7 @@ class Gameboard {
   player1 = new Player(`1`, `X`);
   player2 = new Player(`2`, `O`);
   currentPlayer;
+  turnCounter = 0; //used to alert for no win outcome
 
   //clears board each time and resets with 9 divs with click events. Sets first turn to player1 and builds gameGrid array to track for a winner
   buildBoard = () => {
@@ -22,6 +23,7 @@ class Gameboard {
   //based on player turn, changes the textContent of a clicked div to that symbol. Removes the event listener to prevent reclick
   placeMarker = () => {
     event.target.textContent = this.currentPlayer.marker;
+    this.turnCounter++;
     //replaces numbers on gameGrid with X/O symbols to check victory patterns
     this.gameGrid[event.target.id] = this.currentPlayer.marker;
     //checks for 3 in a row after each marker placed
@@ -36,7 +38,6 @@ class Gameboard {
   };
 
   checkVictory = (gameGrid) => {
-    console.log(`listening`);
     const win = [
       //all possible winning combinations
       [0, 1, 2],
@@ -56,14 +57,20 @@ class Gameboard {
         winningCombo += gameGrid[win[i][y]];
       }
       if (winningCombo == "XXX" || winningCombo == "OOO") {
-        return this.gameOver(this.currentPlayer);
+        return this.gameOver(true);
+      }
+      else if (this.turnCounter === 9) { //checks for no win
+        return this.gameOver(false);
       }
     }
   };
 
-  gameOver = (currentPlayer) => {
-    alert(`Player ${currentPlayer.name} Wins!`);
-
+  gameOver = (gameCondition) => {
+    if (gameCondition) {
+    alert(`Player ${this.currentPlayer.name} Wins!`);
+    } else if (!gameCondition){
+      alert(`Draw`)
+    }
     setTimeout(() => {
       newGame.buildBoard();
     }, 3000);
@@ -76,8 +83,6 @@ class Player {
     this.marker = marker;
   }
 }
-
-// let gamePlay = {};
 
 let newGame = new Gameboard();
 newGame.buildBoard();
