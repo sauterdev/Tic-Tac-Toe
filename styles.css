@@ -1,0 +1,39 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+  background-color: bisque;
+}
+
+body {
+  width: 600px;
+  height: 600px;
+  margin: 0 auto;
+  background-color: lightgray;
+}
+
+h1 {
+  text-align: center;
+}
+
+.board {
+  width: 500px;
+  height: 500px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  border: 2px solid red;
+}
+
+.gameSquare {
+  border: 0.1rem solid gray;
+  font-size: 2rem;
+  background-color: white;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
