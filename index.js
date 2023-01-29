@@ -25,7 +25,7 @@ class Gameboard {
   placeMarker = () => {
     event.target.textContent = this.currentPlayer.marker;
     this.turnCounter++;
-    //replaces numbers on gameGrid with X/O symbols to check victory patterns
+    //replaces numbers on gameGrid array with X/O symbols to check victory patterns
     this.gameGrid[event.target.id] = this.currentPlayer.marker;
     //checks for 3 in a row after each marker placed
     this.checkVictory(this.gameGrid);
@@ -57,12 +57,13 @@ class Gameboard {
       for (let y = 0; y < 3; y++) {
         winningCombo += gameGrid[win[i][y]];
       }
+      console.log(winningCombo)
       if (winningCombo == "XXX" || winningCombo == "OOO") {
         return this.gameOver(true);
       }
-      else if (this.turnCounter === 9) { //checks for no win
-        return this.gameOver(false);
-      }
+    }
+      if (this.turnCounter === 9) { //checks for no win
+      return this.gameOver(false);
     }
   };
 
